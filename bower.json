@@ -1,0 +1,31 @@
+{
+  "name": "anysearch.js",
+  "version": "1.1.0",
+  "homepage": "https://github.com/JevW/anysearch.js",
+  "authors": [
+    "Eugen Wagner"
+  ],
+  "main": [
+    "js/anysearch.js", 
+    "css/anysearch.css"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "barcode",
+    "scanner",
+    "search"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">=1.10.0"
+  }
+}
