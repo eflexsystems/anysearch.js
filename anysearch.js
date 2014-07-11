@@ -225,13 +225,6 @@
                 var string = String.fromCharCode.apply(String, keypressArr);
                 // check is barcodescanner input
                 if (checkIsBarcode(string, 4, startTime, keyTimestamp)) {
-                    var splittedStringArr = string.split('');
-                    var string = "";
-                    for (var i = 0; i < splittedStringArr.length; i++) {
-                        if (((i + 1) % 4) === 0) {
-                            string = string + splittedStringArr[i];
-                        }
-                    }
                     options.isBarcode(string);
                 }
                 return string;
