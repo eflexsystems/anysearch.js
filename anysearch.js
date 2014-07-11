@@ -310,7 +310,7 @@
             };
 
             // enter and backspace must be handled with keydown cause of some browsers keypress event 
-            $(this).keydown(function(e) {
+            $(this).on('keydown.anysearch', function(e) {
                 if (isAnElementFocused() === false) {
                     if ((checkIsValidTime(keyTimestamp))
                             && (e.which === options.enterKey || e.which === options.backspaceKey)) {
@@ -327,7 +327,7 @@
             });
 
             // handle keypress
-            $(this).keypress(function(e) {
+            $(this).on('keypress.anysearch', (function(e) {
                 // if input aso is not focues && check keydownevents for bacspace and enter key
                 if (isAnElementFocused() === false && e.which !== options.backspaceKey && e.which !== options.enterKey && checkReactOnKeycode(e)) {
                     // completely new init or continuation
