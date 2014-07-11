@@ -79,10 +79,6 @@
                                                                             // Options:
                                                                             // 1 - 99
                                                                             // -----------------------------------------------
-            searchSlider: true,                                             // Activates searchslider with inputfield.
-                                                                            // Options:
-                                                                            // true
-                                                                            // false
                                                                             // -----------------------------------------------
             startAnysearch: function() {},                                  // Callback function will be triggered by first 
                                                                             // reaction of anysearch.js
@@ -260,9 +256,6 @@
             // function for filling the input
             var fillLiveField = function(keypressArr) {
                 var string = String.fromCharCode.apply(String, keypressArr);
-                if (options.searchSlider === true) {
-                    $('#anysearch-input').val(string);
-                }
                 if (options.liveField !== false && options.liveField.selector !== null) {
                     if (options.liveField.html === true) {
                         $('' + options.liveField.selector).html(string);
@@ -290,9 +283,6 @@
                     deleteKeypressArr();
                     fillLiveField(keypressArr);
                     options.stopAnysearch();
-                    if (options.searchSlider === true) {
-                        animateCloseSearchbox();
-                    }
                 }
             };
 
@@ -330,9 +320,6 @@
                             enterPressed();
                         }
                         if (e.which === options.backspaceKey) {
-                            if (options.searchSlider === true) {
-                                timeoutKeypress();
-                            }
                             backspacePressed(e);
                         }
                     }
@@ -345,9 +332,6 @@
                 if (isAnElementFocused() === false && e.which !== options.backspaceKey && e.which !== options.enterKey && checkReactOnKeycode(e)) {
                     // completely new init or continuation
                     if ((checkIsValidTime(keyTimestamp) || keyTimestamp === null)) {
-                        if (options.searchSlider === true) {
-                            animateOpenSearchbox();
-                        }
                         // init
                         if (keyTimestamp === null && e.which !== options.enterKey && e.which !== options.backspaceKey) {
                             startTime = new Date().getTime();
@@ -363,91 +347,8 @@
                         keypressArr.push(e.which);
                         fillLiveField(keypressArr);
                     }
-                    if (options.searchSlider === true) {
-                        timeoutKeypress();
-                    }
                 }
             });
-
-            if (options.searchSlider === true) {
-
-                $('<div id="anysearch-slidebox"><div id="anysearch-slidebox-button"><button id="anysearch-sidebutton"><i class="anysearch-icon"></i></button></div><div id="anysearch-slidebox-content"><input id="anysearch-input" type="text" placeholder="Suchen..."></div></div>').appendTo('body');
-
-                $('#anysearch-slidebox').css('right', '-' + $('#anysearch-slidebox-content').outerWidth() + 'px');
-
-                // function for opening the searchsidebar
-                function animateOpenSearchbox() {
-                    setTimeout(function() {
-                        var button = $('#anysearch-slidebox').find('#anysearch-sidebutton');
-                        if (!$(button).hasClass('anysearchIsOpen')) {
-                            $('#anysearch-slidebox').animate({'right': '0px'}, 300);
-                            $(button).addClass('anysearchIsOpen');
-                        }
-                    }, 25);
-                }
-
-                // function for closing the searchsidebar
-                function animateCloseSearchbox() {
-                    setTimeout(function() {
-                        var button = $('#anysearch-slidebox').find('#anysearch-sidebutton');
-                        if ($(button).hasClass('anysearchIsOpen')) {
-                            $('#anysearch-slidebox').stop(true).animate({'right': '-' + $('#anysearch-slidebox-content').outerWidth()}, 100);
-                            $(button).removeClass('anysearchIsOpen');
-                            deleteKeypressArr();
-                            $('#anysearch-input').val('').blur();
-                        }
-                    }, 25);
-                }
-
-                // close searchsidebar if click outside the area of the searchsidebar
-                $(this).bind('click', function(e) {
-                    if (!$(e.target).is('#anysearch-input')
-                            && !$(e.target).is('#anysearch-sidebutton')
-                            && !$(e.target).is('#anysearch-slidebox-button')
-                            && !$(e.target).is('#anysearch-slidebox')
-                            && !$(e.target).is('#anysearch-slidebox-content')) {
-                        animateCloseSearchbox();
-                    }
-                });
-
-                // open and close the searchsidebar
-                $('#anysearch-sidebutton').click(function() {
-                    if (!$(this).hasClass('anysearchIsOpen')) {
-                        $('#anysearch-input').focus();
-                        animateOpenSearchbox();
-                    } else {
-                        animateCloseSearchbox();
-                    }
-                });
-
-                // if search-input is focused --> bind search if press enter
-                $('#anysearch-input').keydown(function(e) {
-                    if (inputKeypressStartTime === null && e.which !== 13) {
-                        inputKeypressStartTime = new Date().getTime();
-                        options.startAnysearch();
-                    }
-                    if (e.which === 13) {
-                        var string = $(this).val();
-                        var now = new Date().getTime();
-                        if (checkIsBarcode(string, 1, inputKeypressStartTime, now)) {
-                            options.isBarcode(string);
-                        }
-                        inputKeypressStartTime = null;
-                        if (string.length >= 1) {
-                            if (doesAPatternMatch(string) === true && checkAmountKeypressedChars(string)) {
-                                doSearch(string);
-                                animateCloseSearchbox();
-                            }
-                        }
-                        options.stopAnysearch();
-                    }
-                });
-
-                // if focus #anysearch-input -> clearTimeout for closing
-                $('#anysearch-input').focus(function() {
-                    clearTimeout(timeout);
-                });
-            }
         });
     };
 })(jQuery);
