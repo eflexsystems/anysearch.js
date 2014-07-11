@@ -320,7 +320,7 @@
             });
 
             // handle keypress
-            $(this).on('keypress.anysearch', (function(e) {
+            $(this).on('keypress.anysearch', function(e) {
                 // if input aso is not focues && check keydownevents for bacspace and enter key
                 if (isAnElementFocused() === false && e.which !== options.backspaceKey && e.which !== options.enterKey && checkReactOnKeycode(e)) {
                     // completely new init or continuation
