@@ -224,17 +224,14 @@
             var generateStringAfterPressEnter = function() {
                 var string = String.fromCharCode.apply(String, keypressArr);
                 // check is barcodescanner input
-                if (checkIsBarcode(string, 4, startTime, keyTimestamp)) {
+                if (checkIsBarcode(string, startTime, keyTimestamp)) {
                     options.isBarcode(string);
                 }
                 return string;
             };
 
-            var checkIsBarcode = function(string, asciiPosition, startTime, keyTimestamp) {
-                if (((keyTimestamp - startTime) < options.checkIsBarcodeMilliseconds) && (string.length >= (options.checkBarcodeMinLength * asciiPosition))) {
-                    return true;
-                }
-                return false;
+            var checkIsBarcode = function(string, startTime, keyTimestamp) {
+                return (keyTimestamp - startTime) < options.checkIsBarcodeMilliseconds;
             };
 
             // function check length of a string
