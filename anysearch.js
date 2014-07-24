@@ -209,17 +209,6 @@
                 return isBool;
             };
 
-            // backspace key action
-            var backspaceKeyAction = function(e) {
-                if (e && e.preventDefault) {
-                    e.preventDefault();
-                } else {
-                    e.returnValue = false;
-                }
-                keypressArr.pop();
-                return;
-            };
-
             // function to execute after pressing enter
             var generateStringAfterPressEnter = function() {
                 var string = String.fromCharCode.apply(String, keypressArr);
@@ -276,12 +265,6 @@
                 }
             };
 
-            // function if press backspace
-            var backspacePressed = function(e) {
-                backspaceKeyAction(e);
-                fillLiveField(keypressArr);
-            };
-
             var timeoutKeypress = function() {
                 clearTimeout(timeout);
                 timeout = setTimeout(function() {
@@ -308,9 +291,6 @@
                         if (e.which === options.enterKey) {
                             clearTimeout(timeout);
                             enterPressed();
-                        }
-                        if (e.which === options.backspaceKey) {
-                            backspacePressed(e);
                         }
                     }
                 }
