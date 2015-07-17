@@ -1,9 +1,9 @@
 {
-  "name": "anysearch.js",
-  "version": "1.1.0",
-  "homepage": "https://github.com/JevW/anysearch.js",
+  "name": "eflex-anysearch",
+  "version": "1.0.0",
+  "homepage": "https://github.com/eflexsystems/anysearch.js",
   "authors": [
-    "Eugen Wagner"
+    "eFlex Systems"
   ],
   "main": "anysearch.js",
   "moduleType": [
